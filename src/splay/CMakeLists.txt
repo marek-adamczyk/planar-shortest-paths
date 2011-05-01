@@ -1,5 +1,5 @@
 
 
-add_library(splay splay.c)
+add_library(splay splay.c splay_draw.c)
 
 add_subdirectory(test)
