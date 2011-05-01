@@ -3,7 +3,8 @@
 
 typedef struct splay_tree_node Splay_tree;
 struct splay_tree_node {
-    Splay_tree * left, * right;
+    Splay_tree * left;
+    Splay_tree * right;
     int key;
     int size;   /* maintained to be the number of nodes rooted here */
 };

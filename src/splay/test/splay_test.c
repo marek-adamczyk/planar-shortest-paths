@@ -20,12 +20,14 @@ int main( int argc, char ** argv) {
 
     root = NULL;              /* the empty tree */
     for (i = 0; i < n; i++) {
-        root = splay_insert((541*i) & nmod, root);
-        splay_draw(root);
+        int key = (541*i) & nmod;
+        root = splay_insert( key, root);
+        splay_draw(root, key);
     }
     for (i = 0; i < n; i++) {
-        root = splay_delete((541*i) & nmod, root);
-        splay_draw(root);
+        int key = (541*i) & nmod;
+        splay_draw(root, key);
+        root = splay_delete( key, root);
     }
     return 0;
 }
