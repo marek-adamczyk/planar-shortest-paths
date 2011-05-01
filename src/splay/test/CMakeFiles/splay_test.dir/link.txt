@@ -1,1 +1,0 @@
-/usr/bin/gcc     CMakeFiles/splay_test.dir/splay_test.c.o  -o ../../../bin/test/splay_test -rdynamic ../libsplay.a ../../util/libutil.a -lgvc -lgraph -lcdt 
