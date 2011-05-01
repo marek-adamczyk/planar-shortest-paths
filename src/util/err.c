@@ -6,7 +6,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
-#include "err.h"
+#include "util/err.h"
 
 extern int sys_nerr;
 
