@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "common/viz.h"
-#include "splay/splay_draw.h"
+#include "splay/splay_viz.h"
 
 void create_splay_tree_viz( Splay_tree * parent, Splay_tree * tree, Agraph_t *g, Agnode_t **node){
   if( ! tree){

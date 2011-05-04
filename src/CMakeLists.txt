@@ -1,5 +1,6 @@
 include_directories("include")
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
+#include_directories("${CMAKE_CURRENT_BINARY_DIR}/include")
 add_subdirectory(include)
 add_subdirectory(common)
 add_subdirectory(splay)
+add_subdirectory(linkcut)

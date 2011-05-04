@@ -2,7 +2,7 @@
 #include <time.h>
 #include "common/viz.h"
 #include "splay/splay.h"
-#include "splay/splay_draw.h"
+#include "splay/splay_viz.h"
 
 
 int main( int argc, char ** argv) {
