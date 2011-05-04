@@ -2,7 +2,7 @@
 #define _PATH_H_
 
 typedef splay_tree_node Path_vertex;
-typedef splay_tree_node Path;
+typedef Path_vertex Path;//utozsamiamy sciezke z korzeniem drzewa splay, ktore ja reprezentuje
 
 /*
    Return the path containing u. (We assume each path has a unique
