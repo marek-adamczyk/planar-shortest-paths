@@ -1,4 +1,8 @@
+#include "linkcut/linkcut.h"
+
 
 int main(){
-  return 0;
+	int n = 1000;
+	initialize_linkcut_trees(n);
+	return 0;
 }

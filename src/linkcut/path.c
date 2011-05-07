@@ -1,31 +1,15 @@
-#ifndef _PATH_H_
-#define _PATH_H_
-#include "splay/splay.h"
+#include "linkcut/path.h"
 
-typedef struct splay_tree_node Path_vertex;
-typedef Path_vertex Path;//utozsamiamy sciezke z korzeniem drzewa splay, ktore ja reprezentuje
+void initialize_paths( int n){
+	__dparent = (Path_vertex **)malloc( n * sizeof(Path_vertex *));
+	__dcost = (int *)malloc( n * sizeof(int));
+}
 
-static Path_vertex ** __dparent;
-static int * __dcost;
-#define dparent(v) __dparent[key(v)]
-#define dcost(v) __dcost[key(v)]
+Path * path( Path_vertex * v){
+}
 
-void initialize_paths( int n);
-
-/*
-   Return the path containing u. (We assume each path has a unique
-   identifier.)
- */
-Path * path( Path_vertex * v);
-
-/*
-  Return the head (first vertex) of p .
-*/
 Path_vertex * head( Path * p);
 
-/*
-  Return the tail (last vertex) of p .
-*/
 Path_vertex * tail( Path * p);
 
 /*
@@ -40,10 +24,7 @@ Path_vertex * before( Path_vertex * p);
 */
 Path_vertex * after( Path_vertex * p);
 
-/*
-   Return the cost of the edge (u, uffer(u)).This operation assumes
-that u is not the tail of puth(u).
-*/
+
 int cost( Path_vertex * v);
 
 /*
@@ -80,4 +61,7 @@ x is undefined; if u is originally the tail of puth(u), q is null and y is undef
 */
 void split( Path_vertex * v, Path * p, Path * q, int * x, int * y);
 
-#endif
+
+
+
+

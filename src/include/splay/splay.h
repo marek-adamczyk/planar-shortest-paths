@@ -9,6 +9,8 @@ struct splay_tree_node {
     int size;   /* maintained to be the number of nodes rooted here */
 };
 
+#define key(v) (v->key)
+
 #define node_size(x) (((x)==NULL) ? 0 : ((x)->size))
 /* This macro returns the size of a node.  Unlike "x->size",     */
 /* it works even if x=NULL.  The test could be avoided by using  */

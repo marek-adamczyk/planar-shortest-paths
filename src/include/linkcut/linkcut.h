@@ -1,7 +1,12 @@
 #ifndef _LINKCUT_H_
 #define _LINKCUT_H_
+#include "linkcut/path.h"
 
-typedef struct Path_vertex Linkcut_vertex;
+typedef Path_vertex Linkcut_vertex;
+
+static Linkcut_vertex * lcvert;
+
+void initialize_linkcut_trees( int n);
 
 /*
    Return the parent of u. If u has no parent (it is a tree root),
@@ -43,14 +48,14 @@ void link( Linkcut_vertex * v, Linkcut_vertex * w, int x);
    Divide the tree containing vertex v into two trees by deleting the
    edge (v,parent(v)); return the cost of this edge. This operation assumes that v is not a tree root.
  */
-int cut( Linkcut_vertex v);
+int cut( Linkcut_vertex * v);
 
 /*
    Modify the tree containing vertex v by making v the root. (This
    operation can be regarded as reversing the direction of every edge on the path from v
    to the original root.)
  */
-void evert( Linkcut_vertex v);
+void evert( Linkcut_vertex * v);
 
 
 
