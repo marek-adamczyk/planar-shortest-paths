@@ -1,3 +1,3 @@
 
-add_library(common err.c viz.c)
+add_library(common err.cpp viz.cpp)
 

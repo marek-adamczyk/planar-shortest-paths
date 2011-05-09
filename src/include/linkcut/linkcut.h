@@ -1,13 +1,18 @@
 #ifndef _LINKCUT_H_
 #define _LINKCUT_H_
-#include "linkcut/path.h"
+#include "linkcut/splay.h"
 
-typedef Path_vertex Linkcut_vertex;
+extern "C" {
+  typedef splay_tree_node Linkcut_vertex;
 
-static Linkcut_vertex * lcvert;
+  Linkcut_vertex * make_tree();
+  void cut( Linkcut_vertex * v);
+  void link( Linkcut_vertex * v, Linkcut_vertex * w);
+  Linkcut_vertex * root( Linkcut_vertex * v);
 
-void initialize_linkcut_trees( int n);
+}
 
+#ifdef _NIEWAZNE_
 /*
    Return the parent of u. If u has no parent (it is a tree root),
    return a special value null.
@@ -57,6 +62,6 @@ int cut( Linkcut_vertex * v);
  */
 void evert( Linkcut_vertex * v);
 
-
+#endif
 
 #endif

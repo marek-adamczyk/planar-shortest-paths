@@ -1,4 +1,4 @@
 
-add_library(linkcut linkcut.c path.c linkcut_viz.c)
+add_library(linkcut linkcut.cpp splay.cpp linkcut_viz.cpp)
 
 add_subdirectory(test)

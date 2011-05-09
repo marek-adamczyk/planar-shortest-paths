@@ -1,17 +1,35 @@
-#ifndef _PATH_H_
-#define _PATH_H_
-#include "splay/splay.h"
+#ifndef _SPLAY_H_423_
+#define _SPLAY_H_423_
 
-typedef struct splay_tree_node Path_vertex;
-typedef Path_vertex Path;//utozsamiamy sciezke z korzeniem drzewa splay, ktore ja reprezentuje
+extern "C"{
 
-static Path_vertex ** __dparent;
-static int * __dcost;
-#define dparent(v) __dparent[key(v)]
-#define dcost(v) __dcost[key(v)]
+typedef struct splay_tree_node Splay_tree;
+struct splay_tree_node {
+  Splay_tree * parent;
+  Splay_tree * left;
+  Splay_tree * right;
 
-void initialize_paths( int n);
+  int key;//do testow
+};
 
+/*
+  Node v must have an internal left child 
+*/
+void rotate_right( Splay_tree * v);
+
+/*
+  Node v must have an internal right child 
+*/
+void rotate_left( Splay_tree * v);
+
+void splay( Splay_tree * v);
+
+void insert( Splay_tree * v, int i); 
+
+}
+
+
+#ifdef _NIEWAZNE_H_
 /*
    Return the path containing u. (We assume each path has a unique
    identifier.)
@@ -79,5 +97,5 @@ cost of the deleted edge(u, ufter(u)).If u is originally the head of puth(u),p i
 x is undefined; if u is originally the tail of puth(u), q is null and y is undefined.
 */
 void split( Path_vertex * v, Path * p, Path * q, int * x, int * y);
-
+#endif
 #endif

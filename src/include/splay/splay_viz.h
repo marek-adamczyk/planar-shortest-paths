@@ -2,6 +2,8 @@
 #define _SPLAY_DRAW_H_
 #include "splay/splay.h"
 
-int splay_draw( Splay_tree * tree, int colnode);
+extern "C"{
+  void splay_draw( Splay_tree * tree, int colnode);
+}
 
 #endif

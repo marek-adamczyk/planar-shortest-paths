@@ -58,6 +58,8 @@
 /* This is the comparison.                                       */
 /* Returns <0 if i<j, =0 if i=j, and >0 if i>j                   */
 
+extern "C"{
+
 Splay_tree * splay (int i, Splay_tree *t) 
   /* Splay using the key i (which may or may not be in the tree.) */
   /* The starting root is t, and the tree used is defined by rat  */
@@ -135,7 +137,7 @@ Splay_tree * splay (int i, Splay_tree *t)
 Splay_tree * splay_insert(int i, Splay_tree * t) {
   /* Insert key i into the tree t, if it is not already there. */
   /* Return a pointer to the resulting tree.                   */
-  Splay_tree * new;
+  Splay_tree * new_tree;
 
   if (t != NULL) {
     t = splay(i,t);
@@ -143,26 +145,26 @@ Splay_tree * splay_insert(int i, Splay_tree * t) {
       return t;  /* it's already there */
     }
   }
-  new = (Splay_tree *) malloc (sizeof (Splay_tree));
-  if (new == NULL) {
+  new_tree = (Splay_tree *) malloc (sizeof (Splay_tree));
+  if (new_tree == NULL) {
     syserr("Ran out of space");
   }
   if (t == NULL) {
-    new->left = new->right = NULL;
+    new_tree->left = new_tree->right = NULL;
   } else if (compare(i, t->key) < 0) {
-    new->left = t->left;
-    new->right = t;
+    new_tree->left = t->left;
+    new_tree->right = t;
     t->left = NULL;
     t->size = 1+node_size(t->right);
   } else {
-    new->right = t->right;
-    new->left = t;
+    new_tree->right = t->right;
+    new_tree->left = t;
     t->right = NULL;
     t->size = 1+node_size(t->left);
   }
-  new->key = i;
-  new->size = 1 + node_size(new->left) + node_size(new->right);
-  return new;
+  new_tree->key = i;
+  new_tree->size = 1 + node_size(new_tree->left) + node_size(new_tree->right);
+  return new_tree;
 }
 
 Splay_tree * splay_delete(int i, Splay_tree *t) {
@@ -189,4 +191,5 @@ Splay_tree * splay_delete(int i, Splay_tree *t) {
   } else {
     return t;                         /* It wasn't there */
   }
+}
 }

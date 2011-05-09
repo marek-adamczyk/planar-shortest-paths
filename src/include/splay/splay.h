@@ -1,12 +1,14 @@
-#ifndef _SPLAY_H_
-#define _SPLAY_H_
+#ifndef _SPLAY_H_7657_
+#define _SPLAY_H_7657_
+
+extern "C"{
 
 typedef struct splay_tree_node Splay_tree;
 struct splay_tree_node {
-    Splay_tree * left;
-    Splay_tree * right;
-    int key;
-    int size;   /* maintained to be the number of nodes rooted here */
+  Splay_tree * left;
+  Splay_tree * right;
+  int key;
+  int size;   /* maintained to be the number of nodes rooted here */
 };
 
 #define key(v) (v->key)
@@ -20,5 +22,5 @@ struct splay_tree_node {
 Splay_tree * splay( int i, Splay_tree * t);
 Splay_tree * splay_insert( int i, Splay_tree * t);
 Splay_tree * splay_delete( int i, Splay_tree * t);
-
+}
 #endif
