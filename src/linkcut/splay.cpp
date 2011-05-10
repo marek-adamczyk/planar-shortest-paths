@@ -1,48 +1,83 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "linkcut/splay.h"
+#include "linkcut/splay_viz.h"
+#include "common/macros.h"
 
 extern "C"{
+
+
+#define print_tree( s) __print_tree(s,0)
+
+void __print_tree( Splay_tree * v, int indent){
+  if( v == NULL)
+    return;
+
+  loop(i,indent)
+    printf(" ");
+  printf("pt: %d", v->key);
+  if( v->parent != NULL)
+    printf(" %d", v->parent->key);
+
+  printf("\n");
+
+  __print_tree(v->left, indent+2);
+  __print_tree(v->right, indent+2);
+}
+
+
 
 #define is_left(v) ((v)->parent->left == (v))
 #define is_leaf(v) ((v->left == NULL) && (v->right == NULL))
 
-/*
-   We assume in below rotation operations that v has a parent.
- */
 void rotate_right( Splay_tree * v){
-  Splay_tree * w = v->parent;
+  mark();
+  printf("v->key: %d\n", v->key);
 
-  if( w->parent != NULL){
-    if( is_left(w)){
-      w->parent->left = v;
+  Splay_tree * w = v->parent;
+  Splay_tree * u = v->left;
+
+  if( w != NULL){
+    if( is_left(v)){
+      w->left = u;
     } else{
-      w->parent->right = v;
+      w->right = u;
     }
   }
-  v->parent = w->parent;
-  w->parent = v;
+  u->parent = w;
 
-  w->left = v->right;
-  w->left->parent = w;
-  v->right = w;
+  v->parent = u;
+  v->left = u->right;
+  u->right = v;
+
+  if( v->left != NULL){
+    v->left->parent = v;
+  }
 }
 
 void rotate_left( Splay_tree * v){
-  Splay_tree * w = v->parent;
+  mark();
+  printf("v->key: %d\n", v->key);
 
-  if( w->parent != NULL){
-    if( is_left(w)){
-      w->parent->left = v;
+  Splay_tree * w = v->parent;
+  Splay_tree * u = v->right;
+
+  if( w != NULL){
+    if( is_left(v)){
+      w->left = u;
     } else{
-      w->parent->right = v;
+      w->right = u;
     }
   }
-  v->parent = w->parent;
-  w->parent = v;
+  u->parent = w;
 
-  w->right = v->left;
-  w->right->parent = w;
-  v->left = w;
+  v->parent = u;
+  v->right = u->left;
+  u->left = v;
+
+  if( v->right != NULL){
+    v->right->parent = v;
+  }
 }
 
 /*
@@ -51,8 +86,10 @@ void rotate_left( Splay_tree * v){
 
 void rotate( Splay_tree * v){
   if( is_left(v)){
+    mark();
     rotate_right(v->parent);
   } else{
+    mark();
     rotate_left(v->parent);
   }
 }
@@ -60,6 +97,7 @@ void rotate( Splay_tree * v){
 void splay( Splay_tree * v){
   Splay_tree * w, * u;
   while( (w = v->parent) != NULL){
+    printf("w: %d\n", w->key);
     if( (u = w->parent) == NULL){
       rotate(v);
     } else{ /* u != NULL*/
@@ -82,11 +120,11 @@ Splay_tree * root( Splay_tree * v){
   return i;
 }
 
-void insert( Splay_tree * v, int x){
+Splay_tree * insert( Splay_tree * v, int x){
   Splay_tree * i = root(v);
   Splay_tree * s;
 
-  while( ! (i != NULL)){
+  while( i != NULL){
     s = i;
     if( x <= i->key ){
       i = i->left;
@@ -94,9 +132,31 @@ void insert( Splay_tree * v, int x){
       i = i->right;
     }
   }
-
   splay(s);
+  if( s->key == x){
+    return s;
+  }
+
   Splay_tree * new_node = (Splay_tree *) malloc(sizeof(Splay_tree));
+  new_node->key = x;
+  new_node->parent = s;
+  new_node->left = NULL;
+  new_node->right = NULL;
+
+  if( x < s->key){
+    new_node->left = s->left;
+    s->left = new_node;    
+    if( new_node->left != NULL){
+      new_node->left->parent = new_node;
+    }
+  } else{
+    new_node->right = s->right;
+    s->right = new_node;    
+    if( new_node->right != NULL){
+      new_node->right->parent = new_node;
+    }
+  }
+  return s;
 }
 
 

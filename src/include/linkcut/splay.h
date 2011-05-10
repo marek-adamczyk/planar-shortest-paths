@@ -24,7 +24,7 @@ void rotate_left( Splay_tree * v);
 
 void splay( Splay_tree * v);
 
-void insert( Splay_tree * v, int i); 
+Splay_tree * insert( Splay_tree * v, int i); 
 
 }
 
