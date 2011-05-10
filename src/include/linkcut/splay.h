@@ -12,6 +12,12 @@ struct splay_tree_node {
   int key;//do testow
 };
 
+Splay_tree * splay_new_node( Splay_tree * parent, int key);
+
+#define is_left(v) ((v)->parent->left == (v))
+#define is_leaf(v) ((v->left == NULL) && (v->right == NULL))
+
+
 /*
   Node v must have an internal left child 
 */

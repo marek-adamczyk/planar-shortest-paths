@@ -5,21 +5,26 @@
 
 extern "C"{
 
-void create_splay_tree_viz( Splay_tree * parent, Splay_tree * tree, Agraph_t *g, Agnode_t **node){
-  if( ! tree){
-    syserr("tree jest nullem");
-  };
-  printf("tree: %d\n", tree->key);
-  node[tree->key] = agnnode( g, tree->key);
-  if( parent){
-    agedge(g, node[parent->key], node[tree->key]);
-  };
-  if( tree->left){
-    create_splay_tree_viz( tree, tree->left, g, node);
-  };
-  if( tree->right){
-    create_splay_tree_viz( tree, tree->right, g, node);
-  };
+void create_splay_tree_viz( Splay_tree * tree, Agraph_t *g, Agnode_t **node){
+	if( ! tree){
+		syserr("tree jest nullem");
+	};
+	node[tree->key] = agnnode( g, tree->key);
+	if( tree->parent){
+		Agedge_t * e = agedge(g, node[tree->parent->key], node[tree->key]);
+		if( is_left(tree)){
+			agsafeset(e, "color", "green", "");
+		} else{
+			agsafeset(e, "color", "blue", "");
+		}
+	};
+
+	if( tree->left){
+		create_splay_tree_viz( tree->left, g, node);
+	}
+	if( tree->right){
+		create_splay_tree_viz( tree->right, g, node);
+	}
 }
 
 int viz_find_max( Splay_tree * tree){
@@ -49,7 +54,7 @@ void splay_draw( Splay_tree * tree, int colnode){
   Agnode_t *node[max_key];/*zakladamy, ze uniwersum kluczy jest nieduze i mozemy indeksowac jego elementami*/
 
   //tutaj dodaj krawedzie i wierzcholki
-  create_splay_tree_viz( NULL, tree, g, node);
+  create_splay_tree_viz( tree, g, node);
   agsafeset( node[colnode], "color", "red", "");
 
   if( viz_draw( gvc, g)){

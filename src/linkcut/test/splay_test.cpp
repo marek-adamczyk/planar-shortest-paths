@@ -11,16 +11,14 @@ int main( int argc, char ** argv) {
   viz_set_args( argc, argv);
 
 
-  int n = 17;
+  int n = 160;
 
-  Splay_tree * t = new Splay_tree;
-  t->key = n;
+  Splay_tree * t = splay_new_node( NULL, n);
 
-  cerr << "da" << endl;
   loop(i,n){
     int x = i*7 % n;
     t = insert(t, x);
-    splay_draw(t, x);
+//    splay_draw(t, x);
   }
 
   return 0;
