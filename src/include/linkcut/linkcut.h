@@ -10,6 +10,7 @@ extern "C" {
   void link( Linkcut_vertex * v, Linkcut_vertex * w);
   Linkcut_vertex * root( Linkcut_vertex * v);
 
+
 }
 
 #ifdef _NIEWAZNE_

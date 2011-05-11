@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "common/err.h"
+#include "common/macros.h"
 #include "linkcut/linkcut.h"
 #include "linkcut/splay.h"
 #include "linkcut/linkcut_viz.h"
@@ -14,7 +15,11 @@ Linkcut_vertex * make_tree( int id){
   return res;
 }
 
+/*right child cutoff */
 void lc_cut( Linkcut_vertex * v){
+  if( v->right == NULL){
+    return;
+  }
   v->right->parent = NULL;
   v->right->bparent = v;
   v->right = NULL;
@@ -23,24 +28,47 @@ void lc_cut( Linkcut_vertex * v){
 Linkcut_vertex * splice( Linkcut_vertex * v){
   Linkcut_vertex * w = v->bparent;
   splay(w);
-  lc_cut(w->right);
+  lc_cut(w);
 
   w->right = v;
   v->parent = w;
   v->bparent = NULL;
+  return w;
 }
 
 void expose( Linkcut_vertex * v){
   splay(v);
-  lc_cut(v->right);
+  lc_cut(v);
 
   Linkcut_vertex * vit = v;
   while( vit->bparent != NULL){
     vit = splice(vit);
   }
+  splay(v);
 }
 
+void link( Linkcut_vertex * v, Linkcut_vertex * w){
+  expose(v);
+  
+  myassert( v->left == NULL);
+  myassert( v->bparent == NULL);
 
+  expose(w);
+  myassert(w->right == NULL);
+  w->right = v;
+  v->parent = w;
+  v->bparent = NULL;
+}
+
+Linkcut_vertex * root( Linkcut_vertex * v){
+  expose(v);
+  Linkcut_vertex * r = v;
+  while( r->left != NULL){
+    r = r->left;
+  }
+  splay(r);
+  return r;
+}
 
 /*
 

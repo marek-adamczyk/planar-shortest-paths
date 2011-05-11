@@ -8,4 +8,9 @@ extern void syserr(const char *fmt, ...);
 /* wypisuje informacje o bledzie i konczy dzialanie */
 extern void fatal(const char *fmt, ...);
 
+#define myassert( cond) \
+  if( ! (cond)){ \
+    syserr("condition failed: %s", #cond); \
+  }
+
 #endif

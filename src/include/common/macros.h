@@ -5,4 +5,6 @@
 #define mark() printf("[%s| %d]\n", __FILE__, __LINE__);
 #define markt(t) printf("[%s| %d]: %s\n", __FILE__, __LINE__, t);
 
+#define all(coll) (coll).begin(), (coll).end()
+
 #endif
