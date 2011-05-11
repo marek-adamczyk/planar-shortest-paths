@@ -60,21 +60,34 @@ int main( int argc, char ** argv) {
 //    print_linkcut(vertex,n);
     int v = rand()%n;
     int w = rand()%n;
-    int i = root(vertex[v])->key;
-    printf("root of %d is %d\n", v, i);
-    if( i != root(vertex[w])->key){
-      printf("link v:%d w:%d\n", i, w);
+    int vr = root(vertex[v])->key;
+    int wr = root(vertex[w])->key;
+    vector<int> rs;
+    rs.push_back(v);
+    rs.push_back(w);
+    rs.push_back(vr);
+    linkcut_draw(vertex, n, rs);
+  
+//    printf("root of %d is %d\n", v, i);
+    if( vr != wr){
+      printf("link v:%d w:%d\n", vr, w);
       vector<int> color;
-      color.push_back(i);
+      color.push_back(vr);
       color.push_back(w);
-      linkcut_draw(vertex, n, color);
-      link(vertex[i], vertex[w]);
+
+      link(vertex[vr], vertex[w]);
       linkcut_draw(vertex, n, color);
       c--;
       if( c == 1){
         break;
       }
     }
+  }
+  loop(i,n){
+    vector<int> color;
+    color.push_back(i);
+    linkcut_draw(vertex, n, color);
+    cut(vertex[i]);
   }
   
 

@@ -70,6 +70,16 @@ Linkcut_vertex * root( Linkcut_vertex * v){
   return r;
 }
 
+void cut( Linkcut_vertex * v){
+  expose(v);
+  if( v->left != NULL){
+    v->left->bparent = v->bparent;
+    v->left->parent = NULL;
+    v->left = NULL;
+  }
+  v->bparent = NULL;
+}
+
 /*
 
 Path * splice( Path * p){
