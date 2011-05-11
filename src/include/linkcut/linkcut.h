@@ -5,7 +5,7 @@
 extern "C" {
   typedef splay_tree_node Linkcut_vertex;
 
-  Linkcut_vertex * make_tree();
+  Linkcut_vertex * make_tree( int id);
   void cut( Linkcut_vertex * v);
   void link( Linkcut_vertex * v, Linkcut_vertex * w);
   Linkcut_vertex * root( Linkcut_vertex * v);

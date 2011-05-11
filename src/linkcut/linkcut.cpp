@@ -2,20 +2,45 @@
 #include "common/err.h"
 #include "linkcut/linkcut.h"
 #include "linkcut/splay.h"
+#include "linkcut/linkcut_viz.h"
 
 extern "C"{
 
-Linkcut_vertex * make_tree(){
-  Linkcut_vertex * res = (Linkcut_vertex *)malloc(sizeof(Linkcut_vertex));
+Linkcut_vertex * make_tree( int id){
+  Linkcut_vertex * res = (Linkcut_vertex *)splay_new_node( NULL, id);
   if( ! res){
     syserr("Ran out of space");
   }
   return res;
 }
 
+void lc_cut( Linkcut_vertex * v){
+  v->right->parent = NULL;
+  v->right->bparent = v;
+  v->right = NULL;
+}
+
+Linkcut_vertex * splice( Linkcut_vertex * v){
+  Linkcut_vertex * w = v->bparent;
+  splay(w);
+  lc_cut(w->right);
+
+  w->right = v;
+  v->parent = w;
+  v->bparent = NULL;
+}
+
 void expose( Linkcut_vertex * v){
   splay(v);
+  lc_cut(v->right);
+
+  Linkcut_vertex * vit = v;
+  while( vit->bparent != NULL){
+    vit = splice(vit);
+  }
 }
+
+
 
 /*
 

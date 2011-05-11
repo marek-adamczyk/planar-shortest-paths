@@ -9,6 +9,8 @@ struct splay_tree_node {
   Splay_tree * left;
   Splay_tree * right;
 
+  Splay_tree * bparent;
+
   int key;//do testow
 };
 

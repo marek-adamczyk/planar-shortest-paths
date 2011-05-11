@@ -10,6 +10,7 @@ Splay_tree * splay_new_node( Splay_tree * parent, int key){
         Splay_tree * new_node = (Splay_tree *) malloc(sizeof(Splay_tree));
         new_node->key = key;
         new_node->parent = parent; 
+        new_node->bparent = NULL;
         new_node->left = NULL;
         new_node->right = NULL;
         return new_node;
