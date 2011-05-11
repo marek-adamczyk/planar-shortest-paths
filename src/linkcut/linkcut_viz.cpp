@@ -4,8 +4,6 @@
 #include "linkcut/linkcut_viz.h"
 #include "common/macros.h"
 
-extern "C"{
-
 /* function returns a tail of the path represented by v's left subtree*/
 
 Linkcut_vertex * before( Linkcut_vertex * v){
@@ -65,6 +63,10 @@ void create_linkcut_forest_viz( Linkcut_vertex ** forest, int size, Agraph_t *g,
 }
 
 void linkcut_draw( Linkcut_vertex ** forest, int size){
+  vector<int> empty;
+  linkcut_draw(forest,size,empty);
+}
+void linkcut_draw( Linkcut_vertex ** forest, int size, vector<int> &colverts){
   GVC_t *gvc = gvContext();
   viz_set_gvc( gvc, "linkcut");
 
@@ -72,9 +74,11 @@ void linkcut_draw( Linkcut_vertex ** forest, int size){
   Agnode_t *node[size];
 
   create_linkcut_forest_viz( forest, size, g, node);
+  loop(i,colverts.size()){
+    agsafeset( node[colverts[i]], "color", "red", "");
+  }
 
   if( viz_draw( gvc, g)){
     syserr("blad rysowania");/*to nie jest blad systemowy; potem zdefiniowac wlasna obsluge*/
   }
-}
 }

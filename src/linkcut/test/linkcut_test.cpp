@@ -38,7 +38,7 @@ int main( int argc, char ** argv) {
   viz_set_args( argc, argv);
 
 
-  int n = 100;
+  int n = 20;
 
   Linkcut_vertex ** vertex = new Linkcut_vertex*[n];
 
@@ -53,6 +53,7 @@ int main( int argc, char ** argv) {
 
   srand(1234);
   random_shuffle( all(r));
+
   linkcut_draw(vertex, n);
   int c = n;
   while(1){
@@ -63,8 +64,12 @@ int main( int argc, char ** argv) {
     printf("root of %d is %d\n", v, i);
     if( i != root(vertex[w])->key){
       printf("link v:%d w:%d\n", i, w);
+      vector<int> color;
+      color.push_back(i);
+      color.push_back(w);
+      linkcut_draw(vertex, n, color);
       link(vertex[i], vertex[w]);
-      linkcut_draw(vertex, n);
+      linkcut_draw(vertex, n, color);
       c--;
       if( c == 1){
         break;
