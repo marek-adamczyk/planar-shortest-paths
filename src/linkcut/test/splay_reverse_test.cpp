@@ -42,12 +42,12 @@ void alter( Splay_tree * v){
 void check_order( Splay_tree * r){
   int a = 0;
   int b = 0;
- 
     vector<int> ord = order_splay(r);
+/* 
     loop(j, ord.size()){
       cerr << ord[j] << " ";
     }
-    cerr << endl;
+    cerr << endl;*/
   loopfrom(i,1,ord.size()){
     if( ord[i-1] < ord[i]){
       a++;

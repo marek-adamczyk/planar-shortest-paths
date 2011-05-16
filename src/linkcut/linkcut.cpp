@@ -30,8 +30,8 @@ void lc_cut( Linkcut_vertex * v){
     }
     v->left->parent = NULL;
     v->left->bparent = v;
+    v->left->reversed = ! v->left->reversed;
     v->left = NULL;
-    v->reversed = ! v->reversed;
   }
 }
 
@@ -40,7 +40,7 @@ Linkcut_vertex * splice( Linkcut_vertex * v){
   splay(w);
   lc_cut(w);
 
-  if( ! v->reversed){
+  if( ! w->reversed){
     w->right = v;
   } else{
     w->left = v;
@@ -52,21 +52,14 @@ Linkcut_vertex * splice( Linkcut_vertex * v){
 }
 
 void expose( Linkcut_vertex * v){
-  mark();
   splay(v);
-  mark();
   lc_cut(v);
-  mark();
 
   Linkcut_vertex * vit = v;
-  mark();
   while( vit->bparent != NULL){
-  mark();
     vit = splice(vit);
   }
-  mark();
   splay(v);
-  mark();
 }
 
 void link_tree( Linkcut_vertex * v, Linkcut_vertex * w){
@@ -83,18 +76,12 @@ void link_tree( Linkcut_vertex * v, Linkcut_vertex * w){
 }
 
 Linkcut_vertex * root( Linkcut_vertex * v){
-  mark();
   expose(v);
-  mark();
   Linkcut_vertex * r = v;
-  mark();
   while( r->left != NULL){
-  mark();
     r = r->left;
   }
-  mark();
   splay(r);
-  mark();
   return r;
 }
 

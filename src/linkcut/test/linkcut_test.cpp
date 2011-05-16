@@ -37,51 +37,36 @@ int main( int argc, char ** argv) {
   /* A sample use of these functions.  Start with the empty tree,         */
   /* insert some stuff into it, and then delete it                        */
   viz_set_args( argc, argv);
+  srand(1234);
 
 
   int n = 20;
 
   Linkcut_vertex ** vertex = new Linkcut_vertex*[n];
 
-  mark();
   vector<int> r;
   loop(i,n){
     vertex[i] = make_tree(i);
     r.push_back(i);
   }
-  mark();
 
 
-  srand(1234);
   random_shuffle( all(r));
+  disable_drawing();
 
-  mark();
   linkcut_draw(vertex, n);
-  mark();
-  enable_drawing();
-  mark();
   int c = n;
   while(1){
 //    print_linkcut(vertex,n);
-  mark();
     int v = rand()%n;
-  mark();
     int w = rand()%n;
-  mark();
     int vr = root(vertex[v])->key;
-  mark();
     int wr = root(vertex[w])->key;
-  mark();
     vector<int> rs;
-  mark();
     rs.push_back(v);
-  mark();
     rs.push_back(w);
-  mark();
     rs.push_back(vr);
-  mark();
   
-  mark();
 //    printf("root of %d is %d\n", v, i);
     if( vr != wr){
       printf("link v:%d w:%d\n", vr, w);
@@ -98,19 +83,18 @@ int main( int argc, char ** argv) {
       }
     }
   }
-  printf("don: %d\n", drawing_on());
   enable_drawing();
-  printf("don: %d\n", drawing_on());
 
   linkcut_draw(vertex, n);
-  {/*
+  {
+/*
     int r;
     r = 12;
     vector<int> color;
     color.push_back(r);
     evert(vertex[r]);
     linkcut_draw(vertex, n, color);
-*/
+
     {
       int r = 12;
       vector<int> color;
@@ -139,6 +123,7 @@ int main( int argc, char ** argv) {
       evert(vertex[r]);
       linkcut_draw(vertex, n, color);
     };
+*/
   };
 
   while(1){
@@ -149,8 +134,11 @@ int main( int argc, char ** argv) {
     }
     vector<int> color;
     color.push_back(r);
+    expose( vertex[r]);
+    linkcut_draw(vertex, n, color);
     evert(vertex[r]);
     linkcut_draw(vertex, n, color);
+    print_linkcut( vertex, n);
   }
 
 
