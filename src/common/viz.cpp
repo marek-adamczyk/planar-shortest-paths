@@ -2,6 +2,22 @@
 #include "common/viz.h"
 
 extern "C"{
+
+bool draw_on = false;
+
+bool drawing_on(){
+  return draw_on;
+}
+
+void disable_drawing(){
+  draw_on = false;
+}
+
+void enable_drawing(){
+  draw_on = true;
+}
+
+
 int viz_set_args( int argc, char ** argv){
   viz_argc = argc;
   viz_argv = argv;
@@ -17,6 +33,9 @@ int viz_set_gvc( GVC_t *gvc, const char * name){
 }
 
 int viz_draw( GVC_t *gvc, Agraph_t *g){
+  if( ! drawing_on()){
+    return 0;
+ }
   /* Compute a layout using layout engine from command line args */
   gvLayoutJobs(gvc, g);
   /* Write the graph according to -T and -o options */

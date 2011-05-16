@@ -3,7 +3,7 @@
 #include "linkcut/splay.h"
 
 extern "C"{
-  void splay_draw( Splay_tree * tree, int colnode);
+  void splay_draw( Splay_tree * tree);
 }
 
 #endif

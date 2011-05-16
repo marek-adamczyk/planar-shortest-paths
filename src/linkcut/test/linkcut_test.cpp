@@ -4,6 +4,7 @@
 #include <ctime>
 #include "linkcut/linkcut.h"
 #include "linkcut/linkcut_viz.h"
+#include "linkcut/splay_viz.h"
 #include "common/macros.h"
 using namespace std;
 
@@ -54,20 +55,33 @@ int main( int argc, char ** argv) {
   srand(1234);
   random_shuffle( all(r));
 
+  mark();
   linkcut_draw(vertex, n);
+  mark();
+  enable_drawing();
+  mark();
   int c = n;
   while(1){
 //    print_linkcut(vertex,n);
+  mark();
     int v = rand()%n;
+  mark();
     int w = rand()%n;
+  mark();
     int vr = root(vertex[v])->key;
+  mark();
     int wr = root(vertex[w])->key;
+  mark();
     vector<int> rs;
+  mark();
     rs.push_back(v);
+  mark();
     rs.push_back(w);
+  mark();
     rs.push_back(vr);
-    linkcut_draw(vertex, n, rs);
+  mark();
   
+  mark();
 //    printf("root of %d is %d\n", v, i);
     if( vr != wr){
       printf("link v:%d w:%d\n", vr, w);
@@ -75,7 +89,8 @@ int main( int argc, char ** argv) {
       color.push_back(vr);
       color.push_back(w);
 
-      link(vertex[vr], vertex[w]);
+      linkcut_draw(vertex, n, color);
+      link_tree(vertex[vr], vertex[w]);
       linkcut_draw(vertex, n, color);
       c--;
       if( c == 1){
@@ -83,11 +98,68 @@ int main( int argc, char ** argv) {
       }
     }
   }
+  printf("don: %d\n", drawing_on());
+  enable_drawing();
+  printf("don: %d\n", drawing_on());
+
+  linkcut_draw(vertex, n);
+  {/*
+    int r;
+    r = 12;
+    vector<int> color;
+    color.push_back(r);
+    evert(vertex[r]);
+    linkcut_draw(vertex, n, color);
+*/
+    {
+      int r = 12;
+      vector<int> color;
+      color.clear();
+      color.push_back(r);
+      splay_draw( vertex[r]);
+      splay( vertex[r]);
+      splay_draw( vertex[r]);
+      linkcut_draw(vertex, n, color);
+      expose( vertex[r]);
+      linkcut_draw(vertex, n, color);
+      evert(vertex[r]);
+      linkcut_draw(vertex, n, color);
+    };
+    {
+      int r = 10;
+      vector<int> color;
+      color.clear();
+      color.push_back(r);
+      splay_draw( vertex[r]);
+      splay( vertex[r]);
+      splay_draw( vertex[r]);
+      linkcut_draw(vertex, n, color);
+      expose( vertex[r]);
+      linkcut_draw(vertex, n, color);
+      evert(vertex[r]);
+      linkcut_draw(vertex, n, color);
+    };
+  };
+
+  while(1){
+    int r;
+    scanf("%d", &r);
+    if( r < 0){
+      break;
+    }
+    vector<int> color;
+    color.push_back(r);
+    evert(vertex[r]);
+    linkcut_draw(vertex, n, color);
+  }
+
+
   loop(i,n){
     vector<int> color;
     color.push_back(i);
     linkcut_draw(vertex, n, color);
-    cut(vertex[i]);
+    printf("cut v:%d\n", i);
+    cut_tree(vertex[i]);
   }
   
 

@@ -17,12 +17,22 @@ Linkcut_vertex * make_tree( int id){
 
 /*right child cutoff */
 void lc_cut( Linkcut_vertex * v){
-  if( v->right == NULL){
-    return;
+  if( ! v->reversed){
+    if( v->right == NULL){
+      return;
+    }
+    v->right->parent = NULL;
+    v->right->bparent = v;
+    v->right = NULL;
+  } else{
+    if( v->left == NULL){
+      return;
+    }
+    v->left->parent = NULL;
+    v->left->bparent = v;
+    v->left = NULL;
+    v->reversed = ! v->reversed;
   }
-  v->right->parent = NULL;
-  v->right->bparent = v;
-  v->right = NULL;
 }
 
 Linkcut_vertex * splice( Linkcut_vertex * v){
@@ -30,26 +40,38 @@ Linkcut_vertex * splice( Linkcut_vertex * v){
   splay(w);
   lc_cut(w);
 
-  w->right = v;
+  if( ! v->reversed){
+    w->right = v;
+  } else{
+    w->left = v;
+    v->reversed = ! v->reversed;
+  }
   v->parent = w;
   v->bparent = NULL;
   return w;
 }
 
 void expose( Linkcut_vertex * v){
+  mark();
   splay(v);
+  mark();
   lc_cut(v);
+  mark();
 
   Linkcut_vertex * vit = v;
+  mark();
   while( vit->bparent != NULL){
+  mark();
     vit = splice(vit);
   }
+  mark();
   splay(v);
+  mark();
 }
 
-void link( Linkcut_vertex * v, Linkcut_vertex * w){
+void link_tree( Linkcut_vertex * v, Linkcut_vertex * w){
   expose(v);
-  
+
   myassert( v->left == NULL);
   myassert( v->bparent == NULL);
 
@@ -61,16 +83,22 @@ void link( Linkcut_vertex * v, Linkcut_vertex * w){
 }
 
 Linkcut_vertex * root( Linkcut_vertex * v){
+  mark();
   expose(v);
+  mark();
   Linkcut_vertex * r = v;
+  mark();
   while( r->left != NULL){
+  mark();
     r = r->left;
   }
+  mark();
   splay(r);
+  mark();
   return r;
 }
 
-void cut( Linkcut_vertex * v){
+void cut_tree( Linkcut_vertex * v){
   expose(v);
   if( v->left != NULL){
     v->left->bparent = v->bparent;
@@ -80,89 +108,9 @@ void cut( Linkcut_vertex * v){
   v->bparent = NULL;
 }
 
-/*
-
-Path * splice( Path * p){
-  Path *q, *r;
-  int x,y;
-  Path_vertex * v = dparent(tail(p));
-  split( v, q, r, &x, &y);
-  if( q != NULL){
-    dparent(tail(q)) = v;
-    dcost(tail(q)) = x;
-  }
-  p = concatenate( p, path(v), dcost(tail(p)));
-  if( r == NULL){
-    return p;
-  } else{
-    return concatenate( p, r, y);
-  }
-}
-
-Path * expose( Path_vertex * v){
-  Path *p, *q, *r;
-  int x,y;
-  split( v, q, r, &x, &y);
-  if( q != NULL){
-    dparent(tail(q)) = v;
-    dcost(tail(q)) = x;
-  };
-  if( r == NULL){
-    p = path(v);
-  } else{
-    p = concatenate( path(v), r, y);
-  }
-  while( dparent(tail(p)) != NULL){
-    p = splice(p);
-  }
-  return p;
-}
-
-Linkcut_vertex * parent( Linkcut_vertex * v){
-  if( v == tail( path(v))){
-    return dparent(v);
-  } else{
-    return after(v);
-  } 
-}
-
-Linkcut_vertex * root( Linkcut_vertex * v){
-  return tail(expose(v));
-}
-
-int cost( Linkcut_vertex * v){
-  if( v == tail( path(v))){
-    return dcost(v);
-  } else{
-    return pcost(v);
-  }
-}
-
-int mincost( Linkcut_vertex * v){
-  return pmincost(expose(v));
-}
-
-void update( Linkcut_vertex * v, int x){
-  return pupdate(expose(v), x);
-}
-
-void link( Linkcut_vertex * v, Linkcut_vertex * w, int x){
-  concatenate( path(v), expose(w), x);
-}
-
-int cut( Linkcut_vertex * v){
-  Path *p, *q;
-  int x,y;
-  expose(v);
-  split( v, p, q, &x, &y);
-  dparent(v) = NULL;
-  return y;
-}	 
-
 void evert( Linkcut_vertex * v){
-  reverse( expose(v));
-  dparent(v) = NULL;
+  expose(v);
+  reverse(v);
 }
-*/
 
 }

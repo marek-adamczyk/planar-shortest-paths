@@ -1,11 +1,12 @@
 #include <stdio.h>
+#include <algorithm>
 #include "common/err.h"
 #include "common/viz.h"
 #include "linkcut/linkcut_viz.h"
 #include "common/macros.h"
 
 /* function returns a tail of the path represented by v's left subtree*/
-
+/*
 Linkcut_vertex * before( Linkcut_vertex * v){
   if( v->left != NULL){
     Linkcut_vertex * it = v->left;
@@ -21,45 +22,65 @@ Linkcut_vertex * before( Linkcut_vertex * v){
     return it->parent;
   }
 }
+*/
+
+vector<int> create_linkcut_path( Linkcut_vertex * v){
+  vector<int> res;
+  if( v == NULL){
+    return res;
+  }
+
+  vector<int> left(create_linkcut_path(v->left));
+  vector<int> right(create_linkcut_path(v->right));
+  res.insert(res.end(),all(left));
+  res.push_back(v->key);
+  res.insert(res.end(),all(right));
+
+  if( v->reversed){
+    reverse(all(res));
+  }
+  return res;
+}
+
+void create_linkcut_splay_viz( Linkcut_vertex * v, Agraph_t * g, Agnode_t ** node){
+  vector<int> path( create_linkcut_path( v));
+  loopfrom(i,1,path.size()){
+    Agedge_t * e = agedge(g, node[path[i-1]], node[path[i]]);
+    agsafeset(e, "style", "solid", "");
+  }
+}
+
+/* return a tail of the subtree of v*/
+Linkcut_vertex * path_head( Linkcut_vertex * v){
+  if( ! v->reversed){
+    if( v->left == NULL){
+      return v;
+    } else{
+      return path_head(v->left);
+    }
+  } else{
+    if( v->right == NULL){
+      return v;
+    } else{
+      return path_head(v->right);
+    }
+  }
+}
 
 void create_linkcut_forest_viz( Linkcut_vertex ** forest, int size, Agraph_t *g, Agnode_t ** node){
   loop(i,size){
     node[i] = agnnode( g, i);
   }
-
-  
   loop(i,size){
-    Agedge_t * e;
-    if( before(forest[i]) != NULL){
-      agedge(g,node[ before(forest[i])->key], node[i]);
+    if( forest[i]->parent == NULL){
+      create_linkcut_splay_viz( forest[i], g, node);
     }
-
     if( forest[i]->bparent != NULL){
-      Linkcut_vertex * it = forest[i];
-      while( it->left != NULL){
-        it = it->left;
-      }
-      e = agedge(g, node[forest[i]->bparent->key], node[it->key]);
+      Linkcut_vertex * t = path_head(forest[i]);
+      Agedge_t * e = agedge(g, node[forest[i]->bparent->key], node[t->key]);
       agsafeset(e, "style", "dashed", "");
     }
   }
-/*
-    if( forest[i]->parent != NULL){
-      printf("parkey: %d\n", forest[i]->parent->key);
-      e = agedge(g, node[forest[i]->parent->key], node[i]);
-      //      agsafeset(e, "style", "green", "");
-    } else{
-      if( forest[i]->bparent != NULL){
-        Linkcut_vertex * it = forest[i];
-        while( it->left != NULL){
-          it = it->left;
-        }
-        e = agedge(g, node[forest[i]->bparent->key], node[it->key]);
-        agsafeset(e, "style", "dashed", "");
-      }
-    }
-  }
-*/
 }
 
 void linkcut_draw( Linkcut_vertex ** forest, int size){

@@ -3,7 +3,6 @@
 #include "linkcut/splay.h"
 #include "linkcut/splay_viz.h"
 #include "common/macros.h"
-#include "common/err.h"
 
 extern "C"{
 
@@ -40,7 +39,7 @@ Splay_tree * splay_new_node( Splay_tree * parent, int key){
 
 #define is_left(v) ((v)->parent->left == (v))
 #define is_leaf(v) ((v->left == NULL) && (v->right == NULL))
-#define revert(v) if( v != NULL){ v->reversed = ! v->reversed; }
+#define reverse_vert(v) if( v != NULL){ v->reversed = ! v->reversed; }
 
 
 void alter( Splay_tree * v){
@@ -49,8 +48,8 @@ void alter( Splay_tree * v){
   v->left = v->right;
   v->right = tmp;
 
-  revert( v->left);
-  revert( v->right);
+  reverse_vert( v->left);
+  reverse_vert( v->right);
 }
 
 void rotate_right( Splay_tree * v){
@@ -66,32 +65,11 @@ void rotate_right( Splay_tree * v){
     }
   }
   u->parent = w;
+
   v->parent = u;
-
-  if( v->reversed == false && u->reversed == false){
-    v->left = u->right;
-  } else if( v->reversed == true && u->reversed == false){
-    v->left = u->right;
-
-    u->reversed = true;
-    v->reversed = false;
-  } else if( v->reversed == false && u->reversed == true){
-    v->left = u->left;
-    u->left = u->right;
-
-    u->reversed = false;
-    revert(u->left);
-    revert(v->left);
-  } else if( v->reversed == true && u->reversed == true){
-    v->left = u->left;
-    u->left = u->right;
-
-    v->reversed = false;
-    revert(u->left);
-    revert(v->left);
-  };
-
+  v->left = u->right;
   u->right = v;
+
   if( v->left != NULL){
     v->left->parent = v;
   }
@@ -102,6 +80,10 @@ void rotate_left( Splay_tree * v){
   Splay_tree * w = v->parent;
   Splay_tree * u = v->right;
 
+  if( v->reversed != u->reversed){
+    alter(u);
+  }
+
   if( w != NULL){
     if( is_left(v)){
       w->left = u;
@@ -110,34 +92,11 @@ void rotate_left( Splay_tree * v){
     }
   }
   u->parent = w;
+
   v->parent = u;
-
-  if( v->reversed == false && u->reversed == false){
-    v->right = u->left;
-    //v->left = u->right;
-  } else if( v->reversed == true && u->reversed == false){
-    v->right = u->left;
-    //v->left = u->right;
-
-    u->reversed = true;
-    v->reversed = false;
-  } else if( v->reversed == false && u->reversed == true){
-    v->right = u->right;
-    u->right = u->left;
-
-    u->reversed = false;
-    revert(u->right);
-    revert(v->right);
-  } else if( v->reversed == true && u->reversed == true){
-    v->right = u->right;
-    u->right = u->left;
-
-    v->reversed = false;
-    revert(u->right);
-    revert(v->right);
-  };
-
+  v->right = u->left;
   u->left = v;
+
   if( v->right != NULL){
     v->right->parent = v;
   }
@@ -171,19 +130,36 @@ void splay( Splay_tree * v){
     r->bparent = NULL;
   }
 
+  splay_draw(v);
   Splay_tree * w, * u;
   while( (w = v->parent) != NULL){
+    //		splay_draw(r,v->key);
     if( (u = w->parent) == NULL){
       rotate(v);
     } else{ /* u != NULL*/
       if( is_left(v) ^ is_left(w)){/* both different */
-        rotate(v);
-        rotate(v);
+        if( w->reversed == u->reversed){
+          rotate(v);
+  splay_draw(v);
+          rotate(v);
+        } else{
+          rotate(w);
+  splay_draw(v);
+          rotate(v);
+        }
       } else{ /* both sameside children */
-        rotate(w);
-        rotate(v);
+        if( w->reversed == u->reversed){
+          rotate(w);
+  splay_draw(v);
+          rotate(v);
+        } else{
+          rotate(v);
+  splay_draw(v);
+          rotate(v);
+        }
       }
     }
+    splay_draw(v);
   }
 }
 
@@ -191,23 +167,9 @@ void reverse( Splay_tree * v){
   v->reversed = ! v->reversed;
 }
 
+
+
 ////////////////
-
-void append_left( Splay_tree * v, Splay_tree * w){
-  myassert( v->left == NULL);
-  myassert( w->parent == NULL);
-  v->left = w;
-  w->parent = v;
-}
-
-void append_right( Splay_tree * v, Splay_tree * w){
-  myassert( v->right == NULL);
-  myassert( w->parent == NULL);
-  v->right = w;
-  w->parent = v;
-}
-
-/*
 Splay_tree * insert( Splay_tree * v, int x){
   Splay_tree * i = splay_root(v);
   Splay_tree * s;
@@ -220,6 +182,7 @@ Splay_tree * insert( Splay_tree * v, int x){
       i = i->right;
     }
   }
+  splay_draw(splay_root(v));
   splay(s);
   if( s->key == x){
     return s;
@@ -241,5 +204,5 @@ Splay_tree * insert( Splay_tree * v, int x){
   }
   return s;
 }
-*/
+
 }
