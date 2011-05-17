@@ -26,18 +26,6 @@ vector<int> order_splay( Splay_tree * v){
   return res;
 }
 
-#define revert(v) if( v != NULL){ v->reversed = ! v->reversed; }
-
-
-void alter( Splay_tree * v){
-  v->reversed = ! v->reversed;
-  Splay_tree * tmp = v->left;
-  v->left = v->right;
-  v->right = tmp;
-
-  revert( v->left);
-  revert( v->right);
-}
 
 void check_order( Splay_tree * r){
   int a = 0;

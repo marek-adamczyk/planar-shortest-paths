@@ -62,13 +62,26 @@ void expose( Linkcut_vertex * v){
   splay(v);
 }
 
-void link_tree( Linkcut_vertex * v, Linkcut_vertex * w){
+void evert( Linkcut_vertex * v){
   expose(v);
+  reverse(v);
+}
+
+/*ponizsze funkcje jeszcze nie sa przystosowane do reverse*/
+void link_tree( Linkcut_vertex * v, Linkcut_vertex * w){
+//  expose(v);
+  splay(v);
+  if( v->reversed){
+    alter(v);
+  }
 
   myassert( v->left == NULL);
   myassert( v->bparent == NULL);
 
   expose(w);
+  if( w->reversed){
+    alter(w);
+  }
   myassert(w->right == NULL);
   w->right = v;
   v->parent = w;
@@ -77,27 +90,23 @@ void link_tree( Linkcut_vertex * v, Linkcut_vertex * w){
 
 Linkcut_vertex * root( Linkcut_vertex * v){
   expose(v);
-  Linkcut_vertex * r = v;
-  while( r->left != NULL){
-    r = r->left;
-  }
+  Linkcut_vertex * r = path_head(v);
   splay(r);
   return r;
 }
 
 void cut_tree( Linkcut_vertex * v){
   expose(v);
+  if( v->reversed){
+    alter(v);
+  }
+
   if( v->left != NULL){
     v->left->bparent = v->bparent;
     v->left->parent = NULL;
     v->left = NULL;
   }
   v->bparent = NULL;
-}
-
-void evert( Linkcut_vertex * v){
-  expose(v);
-  reverse(v);
 }
 
 }

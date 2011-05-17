@@ -42,6 +42,37 @@ Splay_tree * splay_new_node( Splay_tree * parent, int key){
 #define is_leaf(v) ((v->left == NULL) && (v->right == NULL))
 #define revert(v) if( v != NULL){ v->reversed = ! v->reversed; }
 
+Splay_tree * path_tail( Splay_tree * v){
+  if( ! v->reversed){
+    if( v->right == NULL){
+      return v;
+    } else{
+      return path_tail(v->right);
+    }
+  } else{
+    if( v->left == NULL){ 
+      return v;
+    } else{
+      return path_head(v->left);
+    }
+  } 
+}   
+Splay_tree * path_head( Splay_tree * v){
+  if( ! v->reversed){
+    if( v->left == NULL){
+      return v;
+    } else{
+      return path_head(v->left);
+    }
+  } else{
+    if( v->right == NULL){
+      return v;
+    } else{
+      return path_tail(v->right);
+    }
+  }
+}
+
 
 void alter( Splay_tree * v){
   v->reversed = ! v->reversed;

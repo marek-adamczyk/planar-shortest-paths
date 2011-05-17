@@ -32,40 +32,6 @@ void create_linkcut_splay_viz( Linkcut_vertex * v, Agraph_t * g, Agnode_t ** nod
   }
 }
 
-/* return a tail of the subtree of v*/
-Linkcut_vertex * path_head( Linkcut_vertex * v);
-Linkcut_vertex * path_tail( Linkcut_vertex * v);
-
-Linkcut_vertex * path_tail( Linkcut_vertex * v){
-  if( ! v->reversed){
-    if( v->right == NULL){
-      return v;
-    } else{
-      return path_tail(v->right);
-    }
-  } else{
-    if( v->left == NULL){
-      return v;
-    } else{
-      return path_head(v->left);
-    }
-  }
-}
-Linkcut_vertex * path_head( Linkcut_vertex * v){
-  if( ! v->reversed){
-    if( v->left == NULL){
-      return v;
-    } else{
-      return path_head(v->left);
-    }
-  } else{
-    if( v->right == NULL){
-      return v;
-    } else{
-      return path_tail(v->right);
-    }
-  }
-}
 
 void create_linkcut_forest_viz( Linkcut_vertex ** forest, int size, Agraph_t *g, Agnode_t ** node){
   loop(i,size){

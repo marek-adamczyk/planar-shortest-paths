@@ -24,6 +24,9 @@ Splay_tree * splay_new_node( Splay_tree * parent, int key);
 
 void splay( Splay_tree * v);
 void reverse( Splay_tree * v);
+void alter( Splay_tree * v);
+Splay_tree * path_head( Splay_tree * v);
+Splay_tree * path_tail( Splay_tree * v);
 
 /*tylko do testow*/
 
