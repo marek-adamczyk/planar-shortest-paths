@@ -45,11 +45,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <stdlib.h>
 #include <string.h>
 
-#include "appconst.h"
+#include "planarity/appconst.h"
 
-#include "graphExtensions.private.h"
-#include "graphExtensions.h"
-#include "graphFunctionTable.h"
+#include "planarity/graphExtensions.private.h"
+#include "planarity/graphExtensions.h"
+#include "planarity/graphFunctionTable.h"
 
 /* Imported functions */
 

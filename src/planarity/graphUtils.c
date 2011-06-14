@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
 
-#include "graphStructures.h"
-#include "graph.h"
+#include "planarity/graphStructures.h"
+#include "planarity/graph.h"
 
 /* Imported functions for FUNCTION POINTERS */
 

@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
 
-#include "graphK23Search.private.h"
-#include "graphK23Search.h"
+#include "planarity/graphK23Search.private.h"
+#include "planarity/graphK23Search.h"
 
 extern int  _SearchForK23InBicomp(graphP theGraph, int v, int R);
 

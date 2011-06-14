@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define _LISTCOLL_C
 
-#include "appconst.h"
-#include "listcoll.h"
+#include "planarity/appconst.h"
+#include "planarity/listcoll.h"
 #include <stdlib.h>
 
 /*****************************************************************************

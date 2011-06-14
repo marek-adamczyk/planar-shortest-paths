@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define GRAPHNONPLANAR_C
 
-#include "graph.h"
+#include "planarity/graph.h"
 
 /* Imported functions */
 

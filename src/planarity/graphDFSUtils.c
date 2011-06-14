@@ -44,7 +44,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define GRAPHDFSUTILS_C
 
-#include "graph.h"
+#include "planarity/graph.h"
 
 extern void _ClearVertexVisitedFlags(graphP theGraph, int);
 
@@ -62,7 +62,7 @@ extern void _ClearVertexVisitedFlags(graphP theGraph, int);
  up related data structures at the same time as the DFS tree is created.
  ********************************************************************/
 
-#include "platformTime.h"
+#include "planarity/platformTime.h"
 
 int  gp_CreateDFSTree(graphP theGraph)
 {

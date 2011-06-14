@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
 
-#include "graphDrawPlanar.private.h"
-#include "graphDrawPlanar.h"
+#include "planarity/graphDrawPlanar.private.h"
+#include "planarity/graphDrawPlanar.h"
 
 extern void _ClearVertexVisitedFlags(graphP theGraph, int);
 

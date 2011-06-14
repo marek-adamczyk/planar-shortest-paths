@@ -42,8 +42,8 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "appconst.h"
-#include "stack.h"
+#include "planarity/appconst.h"
+#include "planarity/stack.h"
 #include <stdlib.h>
 
 stackP sp_New(int capacity)

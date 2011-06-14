@@ -42,12 +42,12 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "graphDrawPlanar.h"
-#include "graphDrawPlanar.private.h"
+#include "planarity/graphDrawPlanar.h"
+#include "planarity/graphDrawPlanar.private.h"
 
 extern int DRAWPLANAR_ID;
 
-#include "graph.h"
+#include "planarity/graph.h"
 
 #include <string.h>
 #include <malloc.h>

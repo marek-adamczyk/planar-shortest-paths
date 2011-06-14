@@ -42,12 +42,12 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "graphK4Search.h"
-#include "graphK4Search.private.h"
+#include "planarity/graphK4Search.h"
+#include "planarity/graphK4Search.private.h"
 
 extern int K4SEARCH_ID;
 
-#include "graph.h"
+#include "planarity/graph.h"
 
 /* Imported functions */
 

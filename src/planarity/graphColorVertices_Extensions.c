@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
 
-#include "graphColorVertices.private.h"
-#include "graphColorVertices.h"
+#include "planarity/graphColorVertices.private.h"
+#include "planarity/graphColorVertices.h"
 
 extern void _AddVertexToDegList(ColorVerticesContext *context, graphP theGraph, int v, int deg);
 extern void _RemoveVertexFromDegList(ColorVerticesContext *context, graphP theGraph, int v, int deg);

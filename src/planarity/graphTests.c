@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #define GRAPHTEST_C
 
-#include "graph.h"
-#include "stack.h"
+#include "planarity/graph.h"
+#include "planarity/stack.h"
 
 extern void _ClearVertexVisitedFlags(graphP theGraph, int);
 

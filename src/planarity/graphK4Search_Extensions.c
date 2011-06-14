@@ -44,8 +44,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <stdlib.h>
 
-#include "graphK4Search.private.h"
-#include "graphK4Search.h"
+#include "planarity/graphK4Search.private.h"
+#include "planarity/graphK4Search.h"
 
 extern int  _SearchForK4InBicomp(graphP theGraph, K4SearchContext *context, int v, int R);
 

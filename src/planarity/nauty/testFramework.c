@@ -48,11 +48,11 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 char *commands = "pdo234c";
 
-#include "../graphK23Search.h"
-#include "../graphK33Search.h"
-#include "../graphK4Search.h"
-#include "../graphDrawPlanar.h"
-#include "../graphColorVertices.h"
+#include "planarity/graphK23Search.h"
+#include "planarity/graphK33Search.h"
+#include "planarity/graphK4Search.h"
+#include "planarity/graphDrawPlanar.h"
+#include "planarity/graphColorVertices.h"
 
 /* Forward Declarations of Private functions */
 graphP createGraph(char command, int n, int maxe);

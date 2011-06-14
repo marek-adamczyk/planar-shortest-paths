@@ -42,12 +42,12 @@ ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "graphColorVertices.h"
-#include "graphColorVertices.private.h"
+#include "planarity/graphColorVertices.h"
+#include "planarity/graphColorVertices.private.h"
 
 extern int COLORVERTICES_ID;
 
-#include "graph.h"
+#include "planarity/graph.h"
 
 #include <string.h>
 #include <malloc.h>
@@ -88,7 +88,7 @@ int _GetContractibleNeighbors(ColorVerticesContext *context, int v, int *pu, int
 
  Returns OK on success, NOTOK on failure
  ********************************************************************/
-#include "platformTime.h"
+#include "planarity/platformTime.h"
 
 int gp_ColorVertices(graphP theGraph)
 {

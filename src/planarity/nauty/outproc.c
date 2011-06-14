@@ -60,7 +60,7 @@ extern char quietMode;
 
 #include "outproc.h"
 #include "testFramework.h"
-#include "../graphColorVertices.h"
+#include "planarity/graphColorVertices.h"
 
 int runTest(FILE *, char);
 
